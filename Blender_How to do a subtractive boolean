@@ -3,3 +3,5 @@ Make sure you've selected the object to be carved from, and add a Boolean Modifi
 For the modifier's Operation choose "Difference".
 For the Object field choose the object that will do the carving.
 Apply the Boolean Modifier and delete your carving object.
+
+NOTE_Does not work on curves
