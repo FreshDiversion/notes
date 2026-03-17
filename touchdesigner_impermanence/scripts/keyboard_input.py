@@ -9,6 +9,7 @@ The performer can:
     SPACE   — Pause / resume decay
     UP/DOWN — Adjust decay rate
     1-4     — Force a specific phase
+    5-8     — Switch dissolution shader (5=Aura, 6=JPEG, 7=Print, 8=Datamosh)
     S       — Toggle between camera and file input
     D       — Trigger a manual damage event
     F       — Toggle fullscreen output
@@ -73,6 +74,22 @@ def onKey(dat, key, state):
         phase_names = {"1": "aura", "2": "reproduction", "3": "erosion", "4": "dissolution"}
         # This would require the decay engine to accept a forced decay value
         print(f"[Impermanence] Jump to phase: {phase_names[key]}")
+
+    # ---- 5-8: Switch shader mode ----
+    elif key in ("5", "6", "7", "8"):
+        shader_names = {
+            "5": "Aura Dissolve (organic)",
+            "6": "Generation Loss (JPEG)",
+            "7": "Halftone Print (mechanical)",
+            "8": "Datamosh (corrupted video)",
+        }
+        shader_index = int(key) - 5
+        try:
+            sw = op("shader_switch")
+            sw.par.index = shader_index
+            print(f"[Impermanence] Shader: {shader_names[key]}")
+        except Exception:
+            pass
 
     # ---- S: Switch input source ----
     elif key == "s":

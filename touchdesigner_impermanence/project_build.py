@@ -82,18 +82,54 @@ def build_network(parent=None):
     feedback.nodeX = 200
     feedback.nodeY = 200
 
-    # GLSL shader for aura dissolution
-    glsl_top = parent.create(glslTOP, "aura_dissolve")
-    glsl_top.par.resolutionw = RES_X
-    glsl_top.par.resolutionh = RES_Y
-    glsl_top.par.outputresolution = "specified"
-    glsl_top.par.pixeldat = os.path.join(SHADERS_DIR, "aura_dissolve.frag")
-    glsl_top.nodeX = 200
-    glsl_top.nodeY = 0
+    # -----------------------------------------------------------------------
+    # SHADER BANK — Four dissolution modes, switchable at runtime
+    # -----------------------------------------------------------------------
+    # Each shader receives the same inputs (source + feedback) and produces
+    # the same output format. A Switch TOP selects which is active.
 
-    # Feed the current frame + feedback into the shader
-    res_top.outputConnectors[0].connect(glsl_top.inputConnectors[0])
-    feedback.outputConnectors[0].connect(glsl_top.inputConnectors[1])
+    shader_names = [
+        ("aura_dissolve",   "aura_dissolve.frag",   "Organic dissolution — memory fading"),
+        ("generation_loss", "generation_loss.frag",  "JPEG recompression — reproduction as degradation"),
+        ("halftone_print",  "halftone_print.frag",   "Mechanical print — dots, ink, paper"),
+        ("datamosh",        "datamosh.frag",         "Corrupted video — displaced history"),
+    ]
+
+    # Shared uniforms driven by the decay controller Script CHOP
+    uniform_names = [
+        "uDecayFactor", "uNoiseAmp", "uContrastLoss",
+        "uColorDrift", "uGhostOpacity", "uAuraRemaining", "uTime",
+    ]
+
+    glsl_tops = []
+    for i, (name, frag_file, description) in enumerate(shader_names):
+        glsl = parent.create(glslTOP, name)
+        glsl.par.resolutionw = RES_X
+        glsl.par.resolutionh = RES_Y
+        glsl.par.outputresolution = "specified"
+        glsl.par.pixeldat = os.path.join(SHADERS_DIR, frag_file)
+        glsl.nodeX = 200
+        glsl.nodeY = -120 * i
+        glsl.comment = description
+
+        # Wire source + feedback into every shader
+        res_top.outputConnectors[0].connect(glsl.inputConnectors[0])
+        feedback.outputConnectors[0].connect(glsl.inputConnectors[1])
+
+        glsl_tops.append(glsl)
+
+    # Switch TOP to select active shader (keys 5-8, or custom parameter)
+    shader_switch = parent.create(switchTOP, "shader_switch")
+    shader_switch.par.index = 0  # Default: aura_dissolve
+    shader_switch.nodeX = 400
+    shader_switch.nodeY = -60
+    shader_switch.comment = "5=Aura 6=JPEG 7=Print 8=Datamosh"
+
+    for glsl in glsl_tops:
+        glsl.outputConnectors[0].connect(shader_switch)
+
+    # For backward compatibility, alias the selected output
+    glsl_top = shader_switch
 
     # =======================================================================
     # 4. REPRODUCTION ENGINE — Mechanical copies that degrade
