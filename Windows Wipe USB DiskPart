@@ -1,0 +1,36 @@
+Open Start.
+Search for Command Prompt, right-click the top result, and select the Run as administrator option.  
+Type the following command to launch DiskPart: diskpart  
+Press Enter  
+Type the following command to list all the active drives: list disk  
+Press Enter  
+Type the following command to select the drive to clean: select disk DISK-NUMBER  
+Press Enter  
+Type the following command to wipe out the drive: clean  
+Press Enter  
+Wait - there will be no feedback that the process is running 
+
+Use patience until this message appears:  
+  
+DiskPart succeeded in cleaning the disk.  
+  
+Type the following command to create a partition: create partition primary  
+Press Enter  
+Type the following command to make the partition active: active  
+Press Enter  
+Type the following command to select the partion: Select partition 1  
+Press Enter  
+Type the following command to format the partition: format fs=fat32   
+Press Enter
+  
+Wait - there will be feedback (a percentage of completion) that the process is running  
+
+Use patience until this message appears:
+
+DiskPart successfully formatted the volume.  
+  
+Type the following command to confirm the drive is still selected: list disk  
+Press Enter  
+There will be an * next to the active disk  
+  
+Done  

@@ -1,0 +1,46 @@
+SD Install  
+Windows  
+Required Dependencies  
+https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Dependencies  
+  
+Python 3.10.6 and Git:  
+Windows: download and run installers for Python 3.10.6  
+Using the exe installer - REMEMBER to click Add Python to PATH  
+Using the exe installer - Ok to check "Disable path length limit"  
+webpage: https://www.python.org/downloads/release/python-3106/  
+exe: https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe  
+  
+Download and run installers for Git  
+git (webpage): https://git-scm.com/download/win  
+
+Install model
+download the stable diffusion model from here:
+v1.4 : https://huggingface.co/CompVis/stable-diffusion-v-1-4-original
+v1.5 : https://huggingface.co/runwayml/stable-diffusion-v1-5
+
+place the .ckpt file in stable-diffusion-webui\models\Stable-diffusion
+
+Install SD
+These commands can be used from command line window that opens after you right click  
+in the Windows Explorer location we would like to have the install and select "Git Bash here".  
+preferred way: using git: git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git.  
+This way is preferred because it lets you update by just running git pull.  
+
+Run webui-user.bat from Windows Explorer as normal, non-administrator, user by doubleclicking  
+the webui-user.bat file in the stable-diffusion-webui folder. 
+  
+The file will automatically install torch and torchvision and other requirements
+This maytake some time  
+
+The cmd window will create a URL 
+Copy and Paste the URL inot a browser window and press enter
+
+This will launch SD  
+
+To relaunch, doubleclick the webui-user.bat file in the stable-diffusion-webui folder.
+This will opne the cmd window and it will provide the link.
+
+Here are some usefull links
+https://github.com/AUTOMATIC1111/stable-diffusion-webui
+https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Dependencies
+https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs

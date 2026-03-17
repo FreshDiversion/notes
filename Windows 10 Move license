@@ -1,0 +1,22 @@
+1. Press Windows+R, type cmd and click OK;
+2. Type the command below and press Enter(This will tell you the type of key you have):
+
+slmgr -dli
+
+3. Review the license information screen to confirm it is a retail license
+
+If so, you can use the key on another computer.
+
+4. Remove the license from the current installation using the command below(This will uninstall your key):
+
+slmgr.vbs /upk
+
+5. Now clear all registry keys with your license:
+
+slmgr.vbs /cpky
+
+6. Now access the new computer where the key will be used, access the CMD for it and type the command below (This will install and activate your windows 10 product key):
+
+slmgr.vbs /ipk (Your Key)
+
+***Replace (Your Key) with your license key.

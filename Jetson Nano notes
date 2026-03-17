@@ -1,0 +1,56 @@
+Jetson Nano
+
+Nvidia Setup
+https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit
+
+first tutorial
+https://github.com/dusty-nv/jetson-inference
+https://www.youtube.com/watch?v=bcM5AQSAzUY
+
+   
+Nvidia has an online course
+https://courses.nvidia.com/courses/course-v1:DLI+C-RX-02+V1/about
+
+First issue:
+Trouble using a webcam
+
+$ sudo apt-get install v4l-utils
+$ v4l2-ctl --list-formats-ext
+
+imagenet-camera --camera=/dev/video0
+
+the windows open at the fullsize of the monitor
+change this in jetson-inference/utils/display/glDisplay.cpp
+https://devtalk.nvidia.com/default/topic/1067872/jetson-tx2/how-to-resize-the-opengl-window-from-jetson-inference-tutorials/
+
+// retrieve screen info
+const int screenIdx   = DefaultScreen(mDisplayX);
+//const int screenWidth = DisplayWidth(mDisplayX, screenIdx);
+const int screenWidth = 1280;
+//const int screenHeight = DisplayHeight(mDisplayX, screenIdx);
+const int screenHeight = 720;
+
+$ cd jetson-inference/build
+$ make
+$ sudo make install
+
+
+
+
+https://www.jetsonhacks.com/
+https://www.jetsonhacks.com/?s=nano
+
+Power
+https://www.jetsonhacks.com/2019/04/10/jetson-nano-use-more-power/
+The Jetson has two power profiles, called modes. Mode 0 is 10W, Mode 1 is 5W. 
+
+To set the mode to 5 Watt mode:
+$ sudo nvpmodel -m 1
+
+To set it back to 10 Watt mode:
+$ sudo nvpmodel -m 0
+
+
+Realsense
+https://www.jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
+
